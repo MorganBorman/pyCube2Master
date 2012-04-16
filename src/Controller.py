@@ -51,37 +51,66 @@ class Controller(object):
     def on_request(self, client, data):
         print "client request %s:" % str(client.address), data
         
+        """
+        #inbound messages
+        
+        list = list servers
+        sr = server registration
+        sc = server confirmation
+        
+        ar = authentication request
+        ac = authentication confirmation
+        
+        eu = effect update
+        er = effect remove
+        
+        us = update stats
+        
+        #outbound messages
+        
+        rc = registration challenge
+        rs = registration success
+        rf = registration failure
+        
+        ac = authentication challenge
+        as = authentication success
+        af = authentication failure
+        
+        eu = effect update
+        er = effect remove
+        """
+        
         if data[0] == "list":
             list = self.servers_model.get_server_list()
             client.send(list)
-        if data[0] == "regserv":
+        if data[0] == "sr":
             self.servers_model.register_server(client, data[1], data[2])
-        elif data[0] == "regconf":
+        elif data[0] == "sc":
             self.servers_model.confirm_server(client, data[1])
         elif not self.servers_model.is_server_confirmed(client):
             client.disconnect()
             return
         
-        if data[0] == "reqauth":
+        if data[0] == "ar":
             pass
-        elif data[0] == "confauth":
+        elif data[0] == "ac":
             pass
-        elif data[0] == "updeff":
+        elif data[0] == "ue":
             pass
-        elif data[0] == "comstats":
+        elif data[0] == "us":
             user = data[1]
     
     def on_disconnect(self, client):
         print "client disconnected %s" % str(client.address)
         
     def on_challenge(self, client, challenge):
-        message = "chalreg %s\n" % challenge
+        message = "rc %s\n" % challenge
         client.send(message)
     
     def on_accept(self, client):
-        client.send("succreg\n")
+        client.send("rs\n")
     
     def on_deny(self, client):
-        client.send("failreg\n")
+        client.send("rf\n")
         client.disconnect()
         

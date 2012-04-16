@@ -1,9 +1,9 @@
 from Signals import SignalObject, Signal
 
 class AuthenticationModel(SignalObject):
-    
-    authenticate = Signal
+
     challenge = Signal
+    accept = Signal
     deny = Signal
 
     def __init__(self):

@@ -58,7 +58,7 @@ class ServersModel(SignalObject):
         del data['answer']
         
         self.servers[client] = data
-        
+        self.server_list_dirty = True
         self.accept.emit(client)
         
     def is_server_confirmed(self, client):
@@ -69,11 +69,12 @@ class ServersModel(SignalObject):
         "Removed the specified server from the list."
         if client in self.servers.keys():
             del self.servers[client]
+            self.server_list_dirty = True
             
         if client in self.servers_pending.keys():
             del self.servers_pending[client]
         
-    def clean(self):
+    def refresh(self):
         "Look for servers which have timed out."
         pass
         
