@@ -34,8 +34,6 @@ class PunitiveModel(SignalObject):
         (effect_type, target_ip, target_mask) can be considered a primary key.
         
         If no active effect for the key specified parameters exists a new one will be created.
-        
-        If expiry is set to -1 the effect will be disabled.
         """
         if (effect_type, target_ip, target_mask) in self.effects.keys():
             pass

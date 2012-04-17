@@ -31,6 +31,12 @@ class Controller(object):
         self.servers_model.accept.connect(self.on_accept)
         self.servers_model.deny.connect(self.on_deny)
         
+        #AuthenticationModel
+        
+        self.authentication_model.challenge.connect(self.on_auth_challenge)
+        self.authentication_model.accept.connect(self.on_auth_accept)
+        self.authentication_model.deny.connect(self.on_auth_deny)
+        
         #######################################
         #start up the socket_manager
         #######################################
@@ -64,7 +70,7 @@ class Controller(object):
         eu = effect update
         er = effect remove
         
-        us = update stats
+        su = update stats
         
         #outbound messages
         
@@ -75,6 +81,9 @@ class Controller(object):
         ac = authentication challenge
         as = authentication success
         af = authentication failure
+        
+        na = names add
+        nr = names remove
         
         eu = effect update
         er = effect remove
@@ -92,12 +101,12 @@ class Controller(object):
             return
         
         if data[0] == "ar":
-            pass
+            self.authentication_model.request_authentication(client, data[1], data[2])
         elif data[0] == "ac":
+            self.authentication_model.confirm_authentication(client, data[1], data[2])
+        elif data[0] == "eu":
             pass
-        elif data[0] == "ue":
-            pass
-        elif data[0] == "us":
+        elif data[0] == "su":
             user = data[1]
     
     def on_disconnect(self, client):
@@ -108,9 +117,25 @@ class Controller(object):
         client.send(message)
     
     def on_accept(self, client):
-        client.send("rs\n")
+        client.unlimit()
+        effect_list = self.punitive_model.get_effect_list()
+        names_list = self.authentication_model.get_name_list()
+        message = "".join(("rs\n", effect_list, names_list))
+        client.send(message)
     
     def on_deny(self, client):
         client.send("rf\n")
         client.disconnect()
+        
+    def on_auth_challenge(self, client, authid, challenge):
+        message = "ac %s %s\n" % (authid, challenge)
+        client.send(message)
+    
+    def on_auth_accept(self, client, authid, groups, names):
+        message = "as %s %s %s\n" % (authid, ','.join(groups), ','.join(names))
+        client.send(message)
+    
+    def on_auth_deny(self, client, authid):
+        message = "af %s\n" % authid
+        client.send(message)
         
