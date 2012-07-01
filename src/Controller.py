@@ -37,6 +37,11 @@ class Controller(object):
         self.authentication_model.accept.connect(self.on_auth_accept)
         self.authentication_model.deny.connect(self.on_auth_deny)
         
+        #PunitiveModel
+        
+        self.punitive_model.update.connect(self.on_punitive_effect_update)
+        self.punitive_model.remove.connect(self.on_punitive_effect_remove)
+        
         #######################################
         #start up the socket_manager
         #######################################
@@ -70,7 +75,7 @@ class Controller(object):
         eu = effect update
         er = effect remove
         
-        su = update stats
+        sd = stats data
         
         #outbound messages
         
@@ -90,8 +95,8 @@ class Controller(object):
         """
         
         if data[0] == "list":
-            list = self.servers_model.get_server_list()
-            client.send(list)
+            servers_list = self.servers_model.get_server_list()
+            client.send(servers_list)
         if data[0] == "sr":
             self.servers_model.register_server(client, data[1], data[2])
         elif data[0] == "sc":
@@ -99,15 +104,15 @@ class Controller(object):
         elif not self.servers_model.is_server_confirmed(client):
             client.disconnect()
             return
-        
-        if data[0] == "ar":
-            self.authentication_model.request_authentication(client, data[1], data[2])
-        elif data[0] == "ac":
-            self.authentication_model.confirm_authentication(client, data[1], data[2])
-        elif data[0] == "eu":
-            pass
-        elif data[0] == "su":
-            user = data[1]
+        else:
+            if data[0] == "ar":
+                self.authentication_model.request_authentication(client, data[1], data[2])
+            elif data[0] == "ac":
+                self.authentication_model.confirm_authentication(client, data[1], data[2])
+            elif data[0] == "ec":
+                self.punitive_model.create_effect(client, *data[1:])
+            elif data[0] == "sd":
+                self.punitive_model.add_data(client, data)
     
     def on_disconnect(self, client):
         print "client disconnected %s" % str(client.address)
@@ -138,4 +143,12 @@ class Controller(object):
     def on_auth_deny(self, client, authid):
         message = "af %s\n" % authid
         client.send(message)
+        
+    def on_punitive_effect_update(self, effect_id, effect_type, target_ip, target_mask, reason):
+        message = "eu %d %d %s %s %s\n" % (effect_id, effect_type, target_ip, target_mask, reason)
+        self.servers_model.broadcast(message)
+        
+    def on_punitive_effect_remove(self, effect_id):
+        message = "er %d\n" % effect_id
+        self.server_model.broadcast(message)
         

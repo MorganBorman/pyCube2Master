@@ -1,0 +1,73 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@outbound messages@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+rc = registration challenge
+rs = registration success
+rf = registration failure
+
+ac = authentication challenge
+as = authentication success
+af = authentication failure
+
+na = names add
+nr = names remove
+
+eu = effect update
+er = effect remove
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@details@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+rc
+------------------------------------------------------------
+format      "rc <challenge>"
+description Send the server authentication challenge
+############################################################
+
+rs
+------------------------------------------------------------
+format      "rs"
+description Inform the server that it has successfully 
+            registered with the master server
+############################################################
+
+rf
+------------------------------------------------------------
+format      "rf"
+description Inform the server that it has failed to register
+            with the master server
+############################################################
+
+ac
+------------------------------------------------------------
+format      "ac <auth request id> <challenge>"
+description Send a client authentication challenge
+############################################################
+
+as
+------------------------------------------------------------
+format      "as <auth request id>"
+description Send a client authentication success message
+############################################################
+
+af
+------------------------------------------------------------
+format      "af <auth request id>"
+description Send a client authentication failure message
+############################################################
+
+eu
+------------------------------------------------------------
+format      "eu <effect id> <effect type> <target ip> <target mask> <reason>"
+description Send a punitive effect update message
+############################################################
+
+er
+------------------------------------------------------------
+format      "er <effect id>"
+description Send a punitive effect remove message
+############################################################
+
+

@@ -1,0 +1,34 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@inbound messages@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+list = list servers
+sr = server registration
+sc = server confirmation
+
+ar = authentication request
+ac = authentication confirmation
+
+ec = effect create
+eu = effect update
+er = effect remove
+
+sd = stats data
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@outbound messages@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+rc = registration challenge
+rs = registration success
+rf = registration failure
+
+ac = authentication challenge
+as = authentication success
+af = authentication failure
+
+na = names add
+nr = names remove
+
+eu = effect update
+er = effect remove

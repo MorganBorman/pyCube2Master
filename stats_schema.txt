@@ -1,0 +1,128 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@Stats Data@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+matches
+------------------------------------------------------------
+long        id
+short       mode (modes.id)
+short       pseudomode (pseudomodes.id)
+int         server (instance.id)
+timestamp   start
+timestamp   end
+############################################################
+
+frag_events
+------------------------------------------------------------
+long        match (matches.id)
+timestamp   when
+long        who (users.id)
+short       type (TEAMKILL, BOT, SPAWNKILL)
+long        target (users.id, NONE)
+############################################################
+
+death_events
+------------------------------------------------------------
+long        match (matches.id)
+timestamp   when
+long        who (users.id)
+short       type (TEAMKILL, SUICIDE, NONUSER, BOT, SPAWNKILL)
+long        killer (users.id, NONE)
+long        shot (shot_events.id, NONE)
+############################################################
+
+activity_spans
+------------------------------------------------------------
+long        match (matches.id)
+short       type (ALIVE, DEAD, SPECTATING, LAGGING, INVISIBLE)
+timestamp   start
+timestamp   end
+long        who (users.id)
+long        milliseconds
+############################################################
+
+shot_events
+------------------------------------------------------------
+long        id
+long        match (matches.id)
+timestamp   when 
+long        who (users.id)
+short       gun (guns.id)
+############################################################
+
+damage_dealt_events
+------------------------------------------------------------
+long        id
+long        match (matches.id)
+long        shot (shot_events.id)
+timestamp   when
+long        target (users.id, NONUSER, BOT)
+int         distance
+############################################################
+
+capture_events
+------------------------------------------------------------
+long        id
+long        who (users.id)
+long        match (matches.id)
+timestamp   when
+short       team
+bool        complete
+long        time
+short       health
+############################################################
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@Caching Schemas@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+cached_scoreboard_(alltime,monthly,daily,hourly)
+------------------------------------------------------------
+long        who (users.id)
+short       mode (modes.id)
+short       pseudomode (pseudomodes.id)
+int         frags
+int         deaths
+int         teamkills
+int         teamdeaths
+int         suicides
+long        damage_spent
+long        damage_dealt
+############################################################
+
+cached_weapon_stats_(alltime,monthly,daily,hourly)
+------------------------------------------------------------
+long        who (users.id)
+short       mode (modes.id)
+short       weapon (weapons.id)
+int         frags
+int         teamkills
+long        damage_spent
+long        damage_dealt
+############################################################
+
+cached_match_performance_(alltime,monthly,daily,hourly)
+------------------------------------------------------------
+long        who (users.id)
+short       mode (modes.id)
+short       pseudomode (pseudomodes.id)
+short       hundredth
+int         frags
+int         deaths
+int         teamkills
+int         teamdeaths
+int         suicides
+long        damage_spent
+long        damage_dealt
+############################################################
+
+cached_user_timecards_(alltime,monthly,daily,hourly)
+------------------------------------------------------------
+long        who (users.id)
+short       weekday (0-6)
+short       hour (0-23)
+long        minutes_alive
+long        minutes_dead
+long        minutes_spectating
+############################################################
+

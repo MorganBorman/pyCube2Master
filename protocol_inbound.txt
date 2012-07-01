@@ -1,0 +1,70 @@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@inbound messages@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+list = list servers
+sr = server registration
+sc = server confirmation
+
+ar = authentication request
+ac = authentication confirmation
+
+ec = effect create
+eu = effect update
+er = effect remove
+
+su = stats update
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@details@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+list
+------------------------------------------------------------
+format      "list"
+description Get the server listing
+############################################################
+
+sr
+------------------------------------------------------------
+format      "sr <server domain> <server port>"
+description Register a server with the master server
+############################################################
+
+sc
+------------------------------------------------------------
+format      "sc <challenge answer>"
+description Confirm server registration
+############################################################
+
+ar
+------------------------------------------------------------
+format      "ar <auth request id> <email>"
+description Request authentication
+############################################################
+
+ac
+------------------------------------------------------------
+format      "ar <auth request id> <challenge answer>"
+description Confirm authentication
+############################################################
+
+ec
+------------------------------------------------------------
+format      "ec <type> <target id> <target name> <target ip> <target mask> <master id> <master name> <master ip> <reason>"
+description Create a new punative effect
+############################################################
+
+er
+------------------------------------------------------------
+format      "er <effect id>"
+description Remove a punative effect
+############################################################
+
+sd
+------------------------------------------------------------
+format      "su <stat event line>"
+description Add a new item of stats data
+############################################################
+
+
