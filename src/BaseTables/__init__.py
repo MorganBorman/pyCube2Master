@@ -1,4 +1,4 @@
-from Common import *
+from Common import database_manager
 
 from User import User
 from UserGroup import UserGroup

@@ -8,6 +8,8 @@ class PunitiveEffectType(database_manager.Base):
     default_expiry_type = Column(Integer)
     default_duration = Column(BigInteger)
     
+    expiry_types = enum(NEVEREXPIRES=-1, EXPIRYDATE=0)
+    
     UniqueConstraint(name, name=__tablename__+'_uq_name')
     
     def __init__(self, name, default_expiry_type, default_duration):

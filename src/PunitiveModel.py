@@ -3,24 +3,7 @@
 import datetime
 from Signals import SignalObject, Signal
 
-from DatabaseManager import database_manager, Session
-from sqlalchemy import or_
-from sqlalchemy import Column, Integer, BigInteger, String, Boolean, DateTime
-from sqlalchemy import Sequence, ForeignKey
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
-from sqlalchemy.orm import relation, mapper, relationship, backref
-from sqlalchemy.schema import UniqueConstraint
-
-from AuthenticationModel import User
-
-NEVEREXPIRES = -1
-EXPIRYDATE = 0
-
-
-
-
-        
-database_manager.initialize_tables()
+from BaseTables import PunitiveEffect, PunitiveEffectType
 
 class PunitiveModel(SignalObject):
 

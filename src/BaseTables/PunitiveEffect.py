@@ -22,6 +22,8 @@ class PunitiveEffect(database_manager.Base):
     expiry_type     = Column(Integer,       nullable=False)
     expiry_time     = Column(DateTime(),    nullable=True)
     
+    expiry_types = enum(NEVEREXPIRES=-1, EXPIRYDATE=0)
+    
     expired         = Column(Boolean)
     
     reason          = Column(String(128))

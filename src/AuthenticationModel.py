@@ -3,6 +3,8 @@ from Signals import SignalObject, Signal
 import random
 import cube2crypto
 
+from BaseTables import User
+
 class AuthenticationModel(SignalObject):
 
     challenge = Signal
@@ -11,8 +13,6 @@ class AuthenticationModel(SignalObject):
 
     def __init__(self):
         SignalObject.__init__(self)
-        
-        #self.users['fd.chasm@gmail.com'] = User('fd.chasm@gmail.com', '+eb7065c2976a8f4f26e179eb0ed4af4b2eb27c157f918c85', ['admin', 'clan', 'coleader'], ['chasm'])
         
         #key = (client, authid)
         #value = {'user': user, 'answer': answer}

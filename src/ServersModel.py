@@ -5,17 +5,7 @@ import time
 import cube2crypto
 import random
 
-from DatabaseManager import database_manager, Session
-from sqlalchemy import or_
-from sqlalchemy import Column, Integer, BigInteger, String, Boolean, DateTime
-from sqlalchemy import Sequence, ForeignKey
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
-from sqlalchemy.orm import relation, mapper, relationship, backref
-from sqlalchemy.schema import UniqueConstraint
-
-
-        
-database_manager.initialize_tables()
+from BaseTables import ServerDomain, ServerInstance
 
 class ServersModel(SignalObject):
 
