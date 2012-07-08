@@ -136,8 +136,8 @@ class Controller(object):
         message = "ac %s %s\n" % (authid, challenge)
         client.send(message)
     
-    def on_auth_accept(self, client, authid, groups, names):
-        message = "as %s %s %s\n" % (authid, ','.join(groups), ','.join(names))
+    def on_auth_accept(self, client, authid, userid, groups, names):
+        message = "as %d %d %s %s\n" % (authid, userid, ','.join(groups), ','.join(names))
         client.send(message)
     
     def on_auth_deny(self, client, authid):

@@ -1,0 +1,17 @@
+from Common import *
+from TableNames import table_names
+
+class UserGroupMembership(database_manager.Base):
+    __tablename__ = table_names['UserGroupMembership']
+    id = Column(Integer, Sequence(__tablename__+'_id_seq'), primary_key=True)
+    user_id = Column(Integer, ForeignKey(table_names['User']+'.id'), nullable=False)
+    group_id = Column(Integer, ForeignKey(table_names['UserGroup']+'.id'), nullable=False)
+    
+    UniqueConstraint(user_id, group_id, name=__tablename__+'_uq_user_id_group_id')
+    
+    user = relationship('User', backref=backref('groups', order_by=id))
+    group = relationship('UserGroup', backref=backref('user_memberships', order_by=id))
+    
+    def __init__(self, userid, groupid):
+        self.user = userid
+        self.name = groupid

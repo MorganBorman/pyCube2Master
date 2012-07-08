@@ -48,7 +48,7 @@ description Send a client authentication challenge
 
 as
 ------------------------------------------------------------
-format      "as <auth request id>"
+format      "as <auth request id> <user id> <groups comma seperated> <names comma seperated>"
 description Send a client authentication success message
 ############################################################
 

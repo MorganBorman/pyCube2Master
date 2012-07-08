@@ -5,6 +5,18 @@ import time
 import cube2crypto
 import random
 
+from DatabaseManager import database_manager, Session
+from sqlalchemy import or_
+from sqlalchemy import Column, Integer, BigInteger, String, Boolean, DateTime
+from sqlalchemy import Sequence, ForeignKey
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
+from sqlalchemy.orm import relation, mapper, relationship, backref
+from sqlalchemy.schema import UniqueConstraint
+
+
+        
+database_manager.initialize_tables()
+
 class ServersModel(SignalObject):
 
     challenge = Signal
@@ -16,9 +28,6 @@ class ServersModel(SignalObject):
         
         self.server_list = ""
         self.server_list_dirty = True
-        
-        self.valid_servers = {}
-        self.valid_servers['example.com'] = "-059f164dff16e859fc5c00a82e6d5f2ae0b36a441b29edf5"
         
         #key = client
         #value = (port, time, server_domain, answer)
@@ -35,11 +44,13 @@ class ServersModel(SignalObject):
             self.servers[client]['time'] = time.time()
             return
         
-        if not server_domain in self.valid_servers.keys():
+        server = Server.by_domain(server_domain)
+        
+        if server is None:
             self.deny.emit(client)
             return
         
-        pubkey = self.valid_servers[server_domain]
+        pubkey = server.pubkey
         
         challenge, answer = cube2crypto.genchallenge(pubkey, format(random.getrandbits(128), 'X'))
         
