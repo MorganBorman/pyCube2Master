@@ -57,7 +57,7 @@ class PunitiveEffect(database_manager.Base):
         self.reason = reason
 
     @staticmethod
-    def expired(query):
+    def query_expired(query):
         query = query.filter(not PunitiveEffect.expired)
         return query.filter(and_(PunitiveEffect.expiry_type!=EXPIRYDATE, 
                                  PunitiveEffect.expiry_time>datetime.datetime.now()))

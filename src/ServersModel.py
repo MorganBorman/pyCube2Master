@@ -28,19 +28,19 @@ class ServersModel(SignalObject):
         self.servers = {}
         
     def register_server(self, client, server_domain, port):
-        "Attempt to register a newly connected server."
+        "Attempt to register a newly connected server_domain."
         
         if client in self.servers.keys():
             self.servers[client]['time'] = time.time()
             return
         
-        server = Server.by_domain(server_domain)
+        server_domain = ServerDomain.by_domain(server_domain)
         
-        if server is None:
+        if server_domain is None:
             self.deny.emit(client)
             return
         
-        pubkey = server.pubkey
+        pubkey = server_domain.pubkey
         
         challenge, answer = cube2crypto.genchallenge(pubkey, format(random.getrandbits(128), 'X'))
         

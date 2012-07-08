@@ -4,11 +4,19 @@ from TableNames import table_names
 class ServerDomain(database_manager.Base):
     __tablename__ = table_names['ServerDomain']
     id = Column(Integer, Sequence(__tablename__+'_id_seq'), primary_key=True)
-    domain = Column(String(64), index=True)
+    name = Column(String(64), index=True)
     pubkey = Column(String(49))
     
-    UniqueConstraint(domain, name=__tablename__+'_uq_domain')
+    UniqueConstraint(name, name=__tablename__+'_uq_name')
     
-    def __init__(self, domain, pubkey):
-        self.domain = domain
+    def __init__(self, name, pubkey):
+        self.name = name
         self.pubkey = pubkey
+        
+    @staticmethod
+    def by_domain(domain):
+        with Session() as session:
+            try:
+                return session.query(ServerDomain).filter(ServerDomain.name==domain).one()
+            except NoResultFound:
+                return None

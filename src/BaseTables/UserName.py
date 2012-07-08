@@ -9,10 +9,10 @@ class UserName(database_manager.Base):
     
     UniqueConstraint(name, name=__tablename__+'_uq_name')
     
-    user = relationship('User', backref=backref('names', order_by=id))
+    user = relationship('User', back_populates="names")
     
-    def __init__(self, userid, name):
-        self.user = userid
+    def __init__(self, user_id, name):
+        self.user_id = user_id
         self.name = name
         
     @staticmethod

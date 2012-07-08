@@ -10,8 +10,8 @@ class User(database_manager.Base):
     
     UniqueConstraint(email, name=__tablename__+'_uq_email')
     
-    names = relationship("UserName", order_by="UserName.id", backref="user")
-    groups = relationship("UserGroupMembership", order_by="UserGroupMembership.id", backref="user")
+    names = relationship('UserName', order_by='UserName.id', back_populates="user")
+    group_memberships = relationship('UserGroupMembership', order_by='UserGroupMembership.id', back_populates="user")
     
     def __init__(self, email, pubkey):
         self.email = email
@@ -21,12 +21,12 @@ class User(database_manager.Base):
     @property
     def name_list(self):
         with Session() as session:
-            return session.query(UserName.name).filter(UserName.user_id==self.id).all()
+            return session.query('UserName.name').filter('UserName.user_id'==self.id).all()
         
     @property
     def group_list(self):
         with Session() as session:
-            return session.query(UserGroupMembership.group.name).filter(UserGroupMembership.user_id==self.id).all()
+            return session.query('UserGroupMembership.group.name').filter('UserGroupMembership.user_id'==self.id).all()
         
     @staticmethod
     def by_email(email):

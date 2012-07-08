@@ -2,6 +2,7 @@ from Common import database_manager
 
 from User import User
 from UserGroup import UserGroup
+from UserName import UserName
 from UserGroupMembership import UserGroupMembership
 from ActivitySpan import ActivitySpan
 from CaptureEvent import CaptureEvent

@@ -3,7 +3,7 @@ from Signals import SignalObject, Signal
 import random
 import cube2crypto
 
-from BaseTables import User
+from BaseTables import User, UserName
 
 class AuthenticationModel(SignalObject):
 

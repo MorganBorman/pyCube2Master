@@ -3,6 +3,8 @@
 import datetime
 from Signals import SignalObject, Signal
 
+from DatabaseManager import Session
+
 from BaseTables import PunitiveEffect, PunitiveEffectType
 
 class PunitiveModel(SignalObject):
@@ -48,11 +50,12 @@ class PunitiveModel(SignalObject):
             effect_list_list = []
             
             with Session() as session:
-                punitive_effect_query = session.query(PunitiveEffect.id, PunitiveEffect.effect_type.name, PunitiveEffect.target_ip, PunitiveEffect.target_mask, PunitiveEffect.reason)
-                rows = punitive_effect_query.filter(not PunitiveEffect.expired).all()
+                punitive_effect_query = session.query(PunitiveEffect.id, PunitiveEffect.effect_type, PunitiveEffect.expired, PunitiveEffect.target_ip, PunitiveEffect.target_mask, PunitiveEffect.reason)
+                rows = punitive_effect_query.filter(PunitiveEffect.expired==False).all()
             
-                for effect_id, effect_type, target_ip, target_mask, reason in rows:
-                    effect_val = "ue %ld %s %ld %ld %s\n" % (effect_id, effect.type, target_ip, target_mask, reason)
+                for effect_id, effect_type, expired, target_ip, target_mask, reason in rows:
+                    effect_type_name = effect_type.name
+                    effect_val = "ue %ld %s %ld %ld %s\n" % (effect_id, effect_type_name, target_ip, target_mask, reason)
                     effect_list_list.append(effect_val)
             
             self.effect_list = "".join(effect_list_list)

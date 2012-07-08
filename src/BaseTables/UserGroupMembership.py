@@ -9,9 +9,9 @@ class UserGroupMembership(database_manager.Base):
     
     UniqueConstraint(user_id, group_id, name=__tablename__+'_uq_user_id_group_id')
     
-    user = relationship('User', backref=backref('groups', order_by=id))
-    group = relationship('UserGroup', backref=backref('user_memberships', order_by=id))
+    user = relationship('User', back_populates="group_memberships")
+    group = relationship('UserGroup')
     
-    def __init__(self, userid, groupid):
-        self.user = userid
-        self.name = groupid
+    def __init__(self, user_id, group_id):
+        self.user_id = user_id
+        self.name = group_id
